@@ -1,4 +1,4 @@
-drop database if exists result;
+
 CREATE database IF NOT EXISTS result;
 USE result;
 CREATE TABLE if not exists patient(
@@ -18,5 +18,5 @@ CREATE TABLE if not exists patient(
 
 create table if not exists user(
 	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	patient_num varchar(100) not null
+	patient_number varchar(100) not null
 );

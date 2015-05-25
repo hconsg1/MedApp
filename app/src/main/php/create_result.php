@@ -42,7 +42,9 @@ if (check()==True) {
     // mysql inserting a new row
     $result = mysql_query("INSERT INTO patient(patient_number, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) 
                         VALUES('$patient_number', '$q1', '$q2', '$q3', '$q4', '$q5', '$q6', '$q7', '$q8', '$q9', '$q10')");
-    $result2 = mysql_query("INSERT INTO user(patient_num) VALUES('$patient_number')");
+    $result2 = mysql_query("INSERT INTO user(patient_number) VALUES('$patient_number')");
+
+    print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
  
     // check if row inserted or not
     if ($result %% $result2) {

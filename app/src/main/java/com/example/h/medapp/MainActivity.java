@@ -1,28 +1,26 @@
 package com.example.h.medapp;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 
 public class MainActivity extends ActionBarActivity {
 
     Button button;
+    TextView content;
     String a;
 
     @Override
@@ -30,47 +28,89 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = (Button)findViewById(R.id.button);
+        content = (TextView)findViewById(R.id.textview);
+        button.setOnClickListener(new Button.OnClickListener(){
 
-        button.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            a = button.getText().toString();
-
-            new SummaryAsyncTask().execute((Void) null);
-        }
+            public void onClick(View v)
+            {
+                try{
+                    // CALL GetText method to make post method call
+                    GetText();
+                }
+                catch(Exception ex)
+                {
+                    content.setText(" url exeption! " );
+                }
+            }
         });
     }
 
-    class SummaryAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    // Create GetText Metod
+    public  void  GetText()  throws UnsupportedEncodingException
+    {
+        // Get user defined values
 
-        private void postData(String patient_id, int[] scores) {
+        // Create data variable for sent values to server
 
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("localhost:8080/app/src/main/php/create_result.php");
+        String data = URLEncoder.encode("patient_number", "UTF-8")
+                + "=" + URLEncoder.encode("1", "UTF-8");
 
-            try {
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(11);
-                nameValuePairs.add(new BasicNameValuePair("id", patient_id));
-                for(int i =0; i<scores.length; i++ ){
-                    String title = "q" + i;
-                    String score = String.valueOf(scores[i]);
-                    nameValuePairs.add(new BasicNameValuePair(title, score));
-                }
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-            }
-            catch(Exception e)
+        for(int i=1; i<11; i++){
+            String temp = "q";
+            String q = temp + i;
+            System.out.println(q);
+
+            data += "&" + URLEncoder.encode(q, "UTF-8") + "="
+                    + URLEncoder.encode("5", "UTF-8");
+
+        }
+
+
+        String text = "";
+        BufferedReader reader=null;
+
+        // Send data
+        try
+        {
+            // Defined URL  where to send data
+            URL url = new URL("localhost:8080/app/src/main/php/create_result.php");
+
+            // Send POST data request
+
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write( data );
+            wr.flush();
+
+            // Get the server response
+
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            // Read Server Response
+            while((line = reader.readLine()) != null)
             {
-                Log.e("log_tag", "Error:  " + e.toString());
+                // Append server response in string
+                sb.append(line + "\n");
             }
+            text = sb.toString();
         }
+        catch(Exception ex)
+        {
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            int[] a = {5,5,5,5,5,5,5,5,5,5};
-            postData("test", a);
-            return null;
         }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch(Exception ex) {}
+        }
+        // Show response on activity
+        content.setText( text  );
     }
 
     @Override
