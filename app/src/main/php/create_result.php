@@ -51,6 +51,7 @@ if (check()==True) {
         // successfully inserted into database
         $response["success"] = 1;
         $response["message"] = "Product successfully created.";
+        print "successful!!!!!!!!!!!!!"
  
         // echoing JSON response
         echo json_encode($response);
@@ -61,6 +62,7 @@ if (check()==True) {
         $response["message"] = "ERROR OCCURED";
      
         // echoing JSON response
+        print "========================not successful======================"
         echo json_encode($response);
     }
 ?>

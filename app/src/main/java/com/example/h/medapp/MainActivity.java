@@ -90,8 +90,7 @@ public class MainActivity extends ActionBarActivity {
             String line = null;
 
             // Read Server Response
-            while((line = reader.readLine()) != null)
-            {
+            while((line = reader.readLine()) != null) {
                 // Append server response in string
                 sb.append(line + "\n");
             }
@@ -102,12 +101,10 @@ public class MainActivity extends ActionBarActivity {
 
         }
         finally
-        {
-            try
-            {
+        {try{
                 reader.close();
             }
-            catch(Exception ex) {}
+        catch(Exception ex) {}
         }
         // Show response on activity
         content.setText( text  );
