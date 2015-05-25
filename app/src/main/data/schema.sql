@@ -1,6 +1,4 @@
-
 CREATE database IF NOT EXISTS result;
-USE result;
 CREATE TABLE if not exists patient(
 	pid int(11) primary key auto_increment,
 	patient_number varchar(50) not null, 

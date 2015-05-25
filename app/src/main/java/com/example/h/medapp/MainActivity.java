@@ -92,6 +92,7 @@ public class MainActivity extends ActionBarActivity {
             // Read Server Response
             while((line = reader.readLine()) != null) {
                 // Append server response in string
+                System.out.println(line);
                 sb.append(line + "\n");
             }
             text = sb.toString();
