@@ -1,43 +1,25 @@
 package com.example.h.medapp;
 
-import android.app.ActivityOptions;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.parse.Parse;
-import com.parse.ParseObject;
 
-import android.content.Intent;
-
-public class MainActivity extends ActionBarActivity {
-
-    Button button;
-    TextView content;
+public class activity_T extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        button = (Button)findViewById(R.id.button);
-
-
+        setContentView(R.layout.thankyou);
     }
 
-    //create sendMessage
-    public void sendMessage(View view){
-        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_out, R.anim.animation_in).toBundle();
-        Intent intent = new Intent(this,activity_Q.class);
-        startActivity(intent, bndlanimation);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity__t, menu);
+        return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
