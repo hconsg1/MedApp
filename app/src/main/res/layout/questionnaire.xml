@@ -50,8 +50,15 @@
             android:layout_height="wrap_content"
             android:text="New RadioButton"
             android:id="@+id/radioButton4"
+            android:drawablePadding="100dp"
             android:layout_below="@+id/radioButton3"
+            android:paddingTop="199dp"
             android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:layout_below="@+id/radioButton4"/>
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -75,7 +82,8 @@
             android:text="New RadioButton"
             android:id="@+id/radioButton7"
             android:layout_below="@+id/radioButton6"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:buttonTint="#00FF00" />
     </RadioGroup>
 
     <Button

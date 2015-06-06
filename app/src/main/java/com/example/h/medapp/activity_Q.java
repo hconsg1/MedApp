@@ -31,6 +31,7 @@ public class activity_Q extends ActionBarActivity {
     private ProgressBar mProgress;
     int count = 0;
 
+
     //write questions
     public void writeQ(){
         questions = new String[5];

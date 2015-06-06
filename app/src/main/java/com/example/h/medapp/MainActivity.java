@@ -28,13 +28,12 @@ public class MainActivity extends ActionBarActivity {
 
         button = (Button)findViewById(R.id.button);
 
-
     }
 
     //create sendMessage
     public void sendMessage(View view){
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.animation_out, R.anim.animation_in).toBundle();
-        Intent intent = new Intent(this,activity_Q.class);
+        Intent intent = new Intent(this,QuestionActivity.class);
         startActivity(intent, bndlanimation);
     }
 
