@@ -130,7 +130,9 @@
     >
     <!-- A vertical LinearLayout in a ScrollView. This emulates a ListView (and is lighter weight
          than a ListView when there aren't many rows). -->
-    <ScrollView android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left|top"
         android:layout_marginTop="50dp"
@@ -141,7 +143,7 @@
              as they are added to and removed from the LinearLayout. -->
 
         <LinearLayout android:id="@+id/container"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:showDividers="middle"

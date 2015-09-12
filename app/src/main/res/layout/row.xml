@@ -1,101 +1,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:animateLayoutChanges="true">
 
-    <TextView
-        android:id="@+id/question1"
-        android:layout_width="wrap_content"
+
+    <SeekBar
+        android:id="@+id/progress_bar"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="QUESTION 1"
-        android:layout_alignParentTop="true"
+        android:max="10"
+        android:indeterminate="false"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/question_text"
         android:layout_centerHorizontal="true" />
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/radioGroup"
-        android:layout_width="400dp"
+    <TextView
+        android:id="@+id/slider_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.95"
-        android:orientation="horizontal"
-        android:padding="20dp"
-        android:layout_below="@+id/question1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:text="slider text content"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/progress_bar"
+        android:layout_centerHorizontal="true" />
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="1"
-            />
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:id="@+id/question_imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/progress_bar"
+        android:layout_alignStart="@+id/progress_bar"
+        android:layout_marginTop="56dp" />
 
-        <RadioButton
-            android:id="@+id/radio2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="2"
-             />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/next_button"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/slider_text"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true" />
 
-        <RadioButton
-            android:id="@+id/radio3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="3"
-             />
-        <RadioButton
-            android:id="@+id/radio4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="4"
-             />
-        <RadioButton
-            android:id="@+id/radio5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="5"
-            android:checked="false"
-             />
-        <RadioButton
-            android:id="@+id/radio6"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="6"
-             />
-        <RadioButton
-            android:id="@+id/radio7"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:gravity="center_horizontal|bottom"
-            android:text="7"
-             />
-    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="QUESTION CONTENT"
+        android:id="@+id/question_text"
+        android:layout_below="@+id/question_imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:paddingBottom="15dp"/>
+
 </RelativeLayout>

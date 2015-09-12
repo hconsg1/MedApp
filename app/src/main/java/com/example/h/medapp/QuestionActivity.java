@@ -93,6 +93,7 @@ package com.example.h.medapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
@@ -104,7 +105,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -122,20 +128,21 @@ public class QuestionActivity extends Activity {
      * is a {@link android.widget.LinearLayout}.
      */
     private ViewGroup mContainerView;
-    private Button submit;
+    private int total_number_of_question = 10;
+    private boolean answered_flag;
     private TextView textView;
+    private ScrollView scrollView;
     int count =0;
     boolean fin = false;
-    ArrayList<Integer> res = new ArrayList<Integer>();
+    int result_array[] = new int[total_number_of_question];
     String[] colors = {"#ff03ef00","#ff5aff00","#fffeff00","#ffffae00","#ffff4800","#ffff1d00","#ffff0011"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
         mContainerView = (ViewGroup) findViewById(R.id.container);
-        submit = (Button) findViewById(R.id.submit);
         textView = (TextView) findViewById(R.id.textViewX);
 
         addItem();
@@ -147,98 +154,86 @@ public class QuestionActivity extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private void addItem() {
-        // Instantiate a new "row" view.
+        answered_flag = false;
+        textView.setText("Question " + (count + 1) + " / 10");
 
+        // Instantiate a new "row" view.
         final ViewGroup newView = (ViewGroup) LayoutInflater.from(this).inflate(
                 R.layout.row, mContainerView, false);
-        textView.setText(count+" / 10");
 
+        mContainerView.addView(newView);
 
-        RadioGroup group = (RadioGroup) newView.findViewById(R.id.radioGroup);
-        group.setId(count);
+        SeekBar seekBar = (SeekBar) newView.findViewById(R.id.progress_bar);
+        TextView question_text_view = (TextView) newView.findViewById(R.id.question_text);
+        Button next_button = (Button)newView.findViewById(R.id.next_button);
+        final TextView slider_textView = (TextView) newView.findViewById(R.id.slider_text);
 
-        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        scrollView.scrollBy(0, +1000);
+
+        slider_textView.setVisibility(View.INVISIBLE);
+        question_text_view.setText(questions_array[count]);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                progress = progresValue;
+            }
 
-                RadioButton btn = (RadioButton) group.findViewById(checkedId);
-                System.out.println(checkedId);
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
-
-                btn.setTextColor(Color.parseColor(colors[checkedId - 2131492972]));
-
-
-     //           btn.setBackgroundColor(-16777216);
-
-                System.out.println(count);
-
-
-
-
-                if (count==group.getId()){
-                    res.add(checkedId);
-
-                    if (res.size()==Questions.length){
-                        submit.setVisibility(View.VISIBLE);
-                        textView.setVisibility(View.INVISIBLE);
-                        fin=true;
-                    }
-
-                    count++;
-                    addItem();
-                }
-                else{
-                    System.out.println("fdifhid");
-                    RadioButton preBtn = (RadioButton) (group.findViewById(res.get(group.getId())));
-                    preBtn.setTextColor(Color.parseColor("#000000"));
-                    res.set(group.getId(),checkedId);
-                }
-
-
-
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                answered_flag = true;
+                Toast.makeText(getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
+                //TODO: save the result to an array
+                result_array[count] = progress;
+                slider_textView.setVisibility(View.VISIBLE);
+                slider_textView.setText("you have chosen: " + seekBar.getProgress() + "/" + seekBar.getMax() +" as your degree of symptom.");
 
             }
         });
 
-        if (!fin) {
-            ((TextView) newView.findViewById(R.id.question1)).setText(Questions[count]);
-            mContainerView.addView(newView, 0);
-        }
 
-        // Because mContainerView has android:animateLayoutChanges set to true,
-        // adding this view is automatically animated.
+        next_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if(answered_flag) {
+                    //MAKE SURE THIS QUESTION IS NOT THE LAST QUESTION.
+                    //IF IT IS THE LAST QUESTION GO TO THANK YOU ACTIVITY
+                    if(count == total_number_of_question-1){
+                        //TODO: save to parse
+
+
+
+                        //TODO: go to thank you activity
+                        Intent intent = new Intent(QuestionActivity.this, activity_T.class);
+                        startActivity(intent);
+
+                    }else{
+                        //IF NOT GO TO NEXT QUESTION
+                        count++;
+                        addItem();
+                    }
+
+
+                }
+            }
+        });
+
+
 
 
     }
 
-    public void submit(View view){
 
-        for (int i=0; i<res.size();i++){
-            System.out.println(res.get(i)- 2131492971);
-        }
-        System.out.println("res"+res.get(0));
-
-        Intent intent = new Intent(this, activity_T.class);
-        startActivity(intent);
-    }
-
-    /**
-     * A static list of country names.
-     */
-    private static final String[] Questions = new String[]{
+    private static final String[] questions_array = new String[]{
             "THIS IS QUESTION 1",
             "THIS IS QUESTION 2",
             "THIS IS QUESTION 3",
